@@ -46,7 +46,7 @@ password=""
 `sh wordpress-migration-for-cpi.sh plugin staging`
 
 ### 本番環境のuploadsディレクトリーをテスト環境へ反映する
-`sh wordpress-migration-for-cpi.sh upload`
+`sh wordpress-migration-for-cpi.sh uploads`
 
 
 ### テスト環境のデータベースを開発環境へ反映する

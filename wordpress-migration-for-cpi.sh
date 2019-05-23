@@ -67,9 +67,9 @@ elif [ $1 == "plugin" ]; then
 	elif [ $2 == "staging" ]; then
 
 		# 本番環境のプラグインをテスト環境へ反映する
-		echo "#### [本番環境]UPLOADディレクトリをアーカイブ"
+		echo "#### [本番環境]UPLOADSディレクトリをアーカイブ"
 		ssh $ssh_command_prod "cd $wp_content_path;tar zcvf $plugins_dir.tar.gz $plugins_dir;exit;"
-		echo "#### [テスト環境]本番のUPLOADを取得"
+		echo "#### [テスト環境]本番のUPLOADSを取得"
 		ssh $ssh_command_staging "cd $wp_content_path;mv $plugins_dir $plugins_dir.bk;wget $production_url/wp-content/$plugins_dir.tar.gz --no-check-certificate;tar zxvf $plugins_dir.tar.gz;exit;"
 		echo "#### [本番環境]DBデータ削除"
 		ssh $ssh_command_prod "cd $wp_content_path;rm -rf $plugins_dir.tar.gz;exit;"
@@ -80,18 +80,18 @@ elif [ $1 == "plugin" ]; then
 	fi
 
 
-elif [ $1 == "upload" ]; then
+elif [ $1 == "uploads" ]; then
 
 	# 本番環境のUPLOADディレクトリーをテスト環境へ反映する
-	echo "#### [本番環境]UPLOADディレクトリをアーカイブ"
+	echo "#### [本番環境]UPLOADSディレクトリをアーカイブ"
 	ssh $ssh_command_prod "cd $wp_content_path;tar zcvf $uploads_dir.tar.gz $uploads_dir;exit;"
-	echo "#### [テスト環境]本番のUPLOADを取得"
+	echo "#### [テスト環境]本番のUPLOADSを取得"
 	ssh $ssh_command_staging "cd $wp_content_path;mv $uploads_dir $uploads_dir.bk;wget $production_url/wp-content/$uploads_dir.tar.gz --no-check-certificate;tar zxvf $uploads_dir.tar.gz;exit;"
 	echo "#### [本番環境]DBデータ削除"
 	ssh $ssh_command_prod "cd $wp_content_path;rm -rf $uploads_dir.tar.gz;exit;"
 	echo "#### [テスト環境]不要なファイル削除"
 	ssh $ssh_command_staging "cd $wp_content_path;rm -rf $uploads_dir.tar.gz;rm -rf $uploads_dir.bk;exit;"
 else
-	echo "１つ目の引数には db or plugin or upload のコマンドを入力してください。"
+	echo "１つ目の引数には db or plugin or uploads のコマンドを入力してください。"
 fi
 
