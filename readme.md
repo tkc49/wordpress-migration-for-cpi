@@ -1,6 +1,11 @@
 # WordPress Migration for CPI
 このシェルスクリプトはCPIサーバーで運用しているWordPressのデータベース、プラグイン、uploadsのデータをテスト環境やVCCWでの開発環境へ取り込むことができます。
 
+## 前提条件
+* CPIの本番環境、テスト環境にwp-cliがインストールされていること
+* 開発環境はVCCWで構築されていること
+
+
 ## 準備
 1. wordpress-migration-for-cpi.sh のファイルをvccwの配下に設置する
 2. wordpress-migration-for-cpi.sh ファイルを開く
