@@ -58,11 +58,15 @@ elif [ $1 == "plugin" ]; then
 	if [ $2 == "local" ]; then
 
 		# テスト環境のプラグインをローカルの開発環境へ反映する
-		echo "#### [テスト環境]DBエクスポート"
+		echo "#### [テスト環境]プラグインエクスポート"
 		ssh $ssh_command_staging "cd $wp_content_path;tar zcvf $plugins_dir.tar.gz $plugins_dir;exit;"
 		echo "#### [ローカル]インポート"
-		vagrant ssh -c "cd /vagrant/wordpress/wp-content;tar zcvf $plugins_dir-`date "+%Y%m%d_%H%M%S"`.tar.gz $plugins_dir --remove-file;wget --http-user=kakogawa --http-passwd=wr7ZiK3V $staging_url/wp-content/$plugins_dir.tar.gz;tar zxvf $plugins_dir.tar.gz;rm -rf $plugins_dir.tar.gz;exit;"
-		echo "#### [テスト環境]DBデータ削除"
+		if [ user == "" ]; then
+		    vagrant ssh -c "cd /vagrant/wordpress/wp-content;tar zcvf $plugins_dir-`date "+%Y%m%d_%H%M%S"`.tar.gz $plugins_dir --remove-file;wget $staging_url/wp-content/$plugins_dir.tar.gz;tar zxvf $plugins_dir.tar.gz;rm -rf $plugins_dir.tar.gz;exit;"
+		else
+		    vagrant ssh -c "cd /vagrant/wordpress/wp-content;tar zcvf $plugins_dir-`date "+%Y%m%d_%H%M%S"`.tar.gz $plugins_dir --remove-file;wget --http-user=$user --http-passwd=$password $staging_url/wp-content/$plugins_dir.tar.gz;tar zxvf $plugins_dir.tar.gz;rm -rf $plugins_dir.tar.gz;exit;"
+		fi
+		echo "#### [テスト環境]プラグインデータ削除"
 		ssh $ssh_command_staging "cd $wp_content_path;rm -rf $plugins_dir.tar.gz;exit;"
 	elif [ $2 == "staging" ]; then
 
